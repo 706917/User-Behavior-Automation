@@ -1,7 +1,7 @@
 # User-Behavior-Automatiom
 An Application to automatically play mini-games on Android phone
 
-Release#01
+<stronmg>Release#01</strong>
 <ul>
 <li> Lunchs from IDE on PC.</li>
 <li> Seeks the mirrored phone screen on the monitor screen. Phone mirrored through Samsung Flow.
