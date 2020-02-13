@@ -1,5 +1,5 @@
-# User-Behavior-Automatiom
-An Application to automatically play mini-games on Android phone
+# User-Behavior-Automation
+An application to automatically play mini-games on Android phone
 
 <strong>Release#01</strong>
 <ul>
