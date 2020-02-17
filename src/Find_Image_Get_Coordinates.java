@@ -13,7 +13,7 @@ public class Find_Image_Get_Coordinates {
 
 public static void main(String[] args) throws AWTException, IOException {
 	
-	String imageName = "src/img/ImageToSearch.png";
+	String imageName = "src/img/HomeButton.png";
 	
 	// declare array to store coordinates and assign its values via launch the method
 	int [] xy = findImageCoordinates(imageName);
