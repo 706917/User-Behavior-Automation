@@ -42,7 +42,7 @@ public class Capture_the_Image {
 			Thread.sleep(2000);
 			
 			// Second step is to capture the image having mouse coordinates 
-			int imageSize = 40;
+			int imageSize = 20;
 			cutImage(coordinates[0], coordinates[1], imageSize, imageSize); // launch the method to capture image using coordinates identified above and desired values of width and height 
 //			
 			}
