@@ -60,8 +60,70 @@ public class Index {
 		mouseClick(yesButtonCoordinates);
 		sleep();
 		
+// Identify the miniGame type and play it
+		
+		//Identify the name of miniGame
+		String gameName = getGameName();
+		
+		// Play the miniGame
+		play(gameName);
+		
+		
 		
 	}
+	// A Method to play the miniGame depending on its name
+	private static void play(String gameName) {
+		if (gameName == "Tap") {
+			playTap();
+		}
+		else {
+			playSwipe();
+		}		
+	}
+
+	// A Method to play SWIPE miniGame
+	private static void playSwipe() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	// A Method to play TAP miniGame
+	private static void playTap() {
+		
+		Robot bot = new Robot();
+		for( int x = 150; x<= 270; x += 60) {
+			for( int y = 260; y <= 380; y += 60) {
+				if (bot.getPixelColor(x, y).getRGB() != -11318627) {
+					mouseClick(new int[x,y]);
+				}
+			}
+		}
+
+		
+	}
+	// A Method to identify the miniGame and get its name
+	private static String getGameName() throws AWTException {
+		
+		// Coordinates of points to check colors
+		int[] pointOne = {138,225};
+		int[] pointTwo = {257, 222};
+		
+		// Empty string to store the name of miniGame		
+		String name = "";
+		
+		// robot to get colors at specified points
+		Robot bot = new Robot();
+		if (bot.getPixelColor(pointOne[0], pointOne[1]).getRGB() == bot.getPixelColor(pointTwo[0], pointTwo[1]).getRGB()) {
+			name = "Swipe";
+		}
+		else {
+			name = "Tap";
+		}		
+		
+		return name;
+	}
+	
+	// A Method to put program on pause
 	private static void sleep() throws InterruptedException {
 		Thread.sleep((int)Math.random()*1000 + 300);
 		
