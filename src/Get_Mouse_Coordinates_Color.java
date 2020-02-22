@@ -22,7 +22,12 @@ public class Get_Mouse_Coordinates_Color {
 		System.out.print("\nMove your mouse");
 		bot.delay(2000);
 		
-		System.out.print("\nRGB : " + bot.getPixelColor(mouseX, mouseY).getRGB());	
+		int step = 1;
+		
+		for (int x = mouseX; x<mouseX +step; x++){
+			for (int y = mouseY; y<mouseY+step; y++){
+				System.out.print("\nRGB\n" + x + ',' + y + '-' + bot.getPixelColor(x,y).getRGB());
+				}
+			}
 	}
-
 }
