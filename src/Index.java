@@ -25,14 +25,25 @@ public class Index {
 // Step 0 : Create a robot
 	//	Robot player = new Robot();
 		
+	// Possibility of take the pause after played game
+		double possibilityPause = 10;
+	// How long is the rest after play
+		long timeRest = (long) (Math.random()*10000 + 1000);
 		
+		// how many games we want to play
+		int countGames = 0;
+		
+		while (countGames<4){
 // STEP 1 : Get PinPoint coordinates
+			
+// Start play
+		long startTime = System.currentTimeMillis();
 		
 		// Array to store X and Y coordinates of PinPoint and its color
 		int[] pinPoint = getPinPointCoordinates();
 		
 		System.out.print("Pin Point coordinates identifyed: \n" +
-		"x = " + pinPoint[0] + "\ny =  " + pinPoint[1]);
+		"x = " + pinPoint[0] + " : y =  " + pinPoint[1]);
 		
 //STEP 2 : Create a list with coordinates of points with 
 // specified blue color around PinPoint. That points will be randomly chosen 
@@ -51,7 +62,7 @@ public class Index {
 		// shift on X to get out from PinPoint
 		int shift = 0;
 		mouseClick(pinPoint, shift);
-		System.out.print("\nMining initiated");
+		System.out.print("\nPinPoint clicked");
 		sleep();
 		
 // STEP 3 : Click on "Yes" Button on the Prompt-pop-up-Window to clean the tile
@@ -61,21 +72,42 @@ public class Index {
 		
 		// Move mouse and click
 		mouseClick(yesButtonCoordinates,0);
-		System.out.print("\nMiniGame initiated");
+		System.out.print("\nMiniGame initiated\n");
 		sleep();
 		
 // Identify the miniGame type and play it
 		
 		//Identify the name of miniGame
 		String gameName = getGameName(pinPoint);
-		System.out.print("\nGame choosen");
+		System.out.print("Game chosen - ");
 		
 		// Play the miniGame
-		play(gameName, pinPoint);
+		play(gameName, pinPoint);	
+		
+// Stop playTime and print duration
+		long finishTime = System.currentTimeMillis();
 		
 		
+		countGames++;
+		System.out.print("\n\n__ " + countGames + " ____Time: " +
+		(finishTime - startTime)/1000 + "_\n\n");
+		Thread.sleep(500);
 		
+// Calculate chances to take a pause and take it if it happen
+		// Random number between 0 and 100 to compare with possibility
+		int random = (int)(Math.random()*100);
+		if(possibilityPause > random) {
+			System.out.print("\n___Taking the Rest___\n\n");
+			Thread.sleep(timeRest);
+			
+		}
+		}
 	}
+	
+	
+	
+	
+	
 	// A Method to play the miniGame depending on its name
 	private static void play(String gameName, int[] pinPoint) throws AWTException, InterruptedException {
 		if (gameName == "Tap") {
@@ -84,13 +116,14 @@ public class Index {
 		}
 		else {
 			playSwipe(pinPoint);
-		}		
+		}	
+		
 	}
 
 	// A Method to play SWIPE miniGame
 	private static void playSwipe(int[] pinPoint) throws AWTException, InterruptedException {
 		sleep();
-		System.out.print("\nPlaying Swipe - \n");
+		System.out.print("Playing Swipe - \n");
 		//steps to coordinates of CheckPoint from PinPoint (claim white circle)
 				int stepPPCHPX = 50;
 				int stepPPCHPY = 80;
@@ -152,7 +185,7 @@ public class Index {
 					}
 				}
 	
-	// A Method to compare the color in different points
+	// A Method to compare the color in different points for Swipe game
 	private static boolean compareColor (int[]main, int[] side) throws AWTException {
 		
 		Robot bot = new Robot();
@@ -178,25 +211,27 @@ public class Index {
 		int stepPPTLY = 110;
 		
 		// Step between tiles 
-		int stepTile = 100;
+		int stepTile = 110;
 		
-		System.out.print("\nPlaying Tap - ");
-		Robot bot = new Robot();
+		System.out.print("Playing Tap - ");
+		Robot tapBot = new Robot();
 		int count = 0;	
 		
-		while (bot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() == -10592674) {
+		while (tapBot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() == -10592674) {
 		//while (count <5 ) {
 		loop:	
-		for( int x = pinPoint[0]-stepPPTLX; x < 350; x += stepTile) {
-			for( int y = pinPoint[1]-stepPPTLY; y < 590; y += stepTile) {
+		for( int x = pinPoint[0]-stepPPTLX; x < 390; x += stepTile) {
+			for( int y = pinPoint[1]-stepPPTLY; y < 650; y += stepTile) {
+				//System.out.print("\nChecking color\n");
 				
-				if (bot.getPixelColor(x, y).getRGB() != -11315627) {
+				if (tapBot.getPixelColor(x, y).getRGB() != -11315627) {
 					mouseClick(new int[]{x,y},0);
 					count++;
 					System.out.print(count);
 					}
+				
 				Thread.sleep(80);
-				if (bot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() != -10592674) {
+				if (tapBot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() != -10592674) {
 					break loop;
 				}
 				}
@@ -233,7 +268,7 @@ public class Index {
 	
 	// A Method to put program on pause
 	private static void sleep() throws InterruptedException {
-		Thread.sleep((int)Math.random()*800 + 300);
+		Thread.sleep((int)Math.random()*600 + 200);
 		
 	}
 	// A Method to move mouse to the coordinates and make a click
