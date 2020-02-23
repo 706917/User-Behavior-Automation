@@ -49,7 +49,7 @@ public class Index {
 		
 		// Move mouse to the PinPoint and click
 		// shift on X to get out from PinPoint
-		int shift = 10;
+		int shift = 0;
 		mouseClick(pinPoint, shift);
 		System.out.print("\nMining initiated");
 		sleep();
@@ -57,10 +57,10 @@ public class Index {
 // STEP 3 : Click on "Yes" Button on the Prompt-pop-up-Window to clean the tile
 		
 		// Calculate coordinates to click
-	//	int [] yesButtonCoordinates = {pinPoint[0] + 27, pinPoint[1] + 40};
+		int [] yesButtonCoordinates = {pinPoint[0] + 40, pinPoint[1] + 70};
 		
 		// Move mouse and click
-	//	mouseClick(yesButtonCoordinates);
+		mouseClick(yesButtonCoordinates,0);
 		System.out.print("\nMiniGame initiated");
 		sleep();
 		
@@ -90,7 +90,7 @@ public class Index {
 	// A Method to play SWIPE miniGame
 	private static void playSwipe(int[] pinPoint) throws AWTException, InterruptedException {
 		sleep();
-		System.out.print("\nPlaying Swipe");
+		System.out.print("\nPlaying Swipe - \n");
 		//steps to coordinates of CheckPoint from PinPoint (claim white circle)
 				int stepPPCHPX = 50;
 				int stepPPCHPY = 80;
@@ -107,6 +107,11 @@ public class Index {
 				int stepLeftPPX = 132;
 				int stepLeftPPY = 50;
 		
+		// Step to the Finish check point
+				int stepPPFInishX = 100;
+				int stepPPFinishY = 172;
+				int finishCHPColor = -1381654; 
+		
 		// Main Check point coordinates
 				int[] mainCHP = new int[] {pinPoint[0] - stepPPCHPX, pinPoint[1] - stepPPCHPY};
 		// Top Check point coordinates
@@ -119,42 +124,47 @@ public class Index {
 				int[] leftCHP = new int[] {pinPoint[0] - stepLeftPPX, pinPoint[1] + stepLeftPPY};
 				
 				Robot bot = new Robot();
-				
-		// Color at Main Check Point
-				int mainColor = bot.getPixelColor(mainCHP[0], mainCHP[1]).getRGB();
-		// Top color
-				int topColor = bot.getPixelColor(topCHP[0], topCHP[1]).getRGB();
-		// Right color
-				int rightColor = bot.getPixelColor(rightCHP[0], rightCHP[1]).getRGB();
-		// Bottom Color
-				int bottomColor = bot.getPixelColor(bottomCHP[0], bottomCHP[1]).getRGB();
-		// Left Color
-				int leftColor = bot.getPixelColor(leftCHP[0], leftCHP[1]).getRGB();
-				
 				// Checking loop
 				int loop = 0;
 				
-				while (loop<5) {
-					if (mainColor == topColor) {
+				while (loop<10) {
+					if (compareColor(mainCHP,topCHP) == true) {
 						mouseClick(topCHP, 0);
 					}
-					else if(mainColor == rightColor){
+					else if (compareColor(mainCHP,rightCHP) == true) {
 						mouseClick(rightCHP, 0);
 					}
-					else if(mainColor == bottomColor) {
+					else if (compareColor(mainCHP,bottomCHP) == true) {
 						mouseClick(bottomCHP, 0);
 					}
 					else {
 						mouseClick(leftCHP, 0);
 						}
+					
 					System.out.print(loop++);
-					Thread.sleep(500);
-					//if (bot.getPixelColor(pinPoint[0], pinPoint[1]).getRGB() == pinPoint[2]) {
-						//break;
-				//	}
+					Thread.sleep(600);
+					if (bot.getPixelColor(pinPoint[0]+stepPPFInishX, pinPoint[1]+stepPPFinishY).getRGB() == finishCHPColor) {
+					//					if (bot.getPixelColor(pinPoint[0], pinPoint[1]).getRGB() == pinPoint[2]) {
+						System.out.print("\nSwap finished");
+						break;
+						
+					}
 					}
 				}
+	
+	// A Method to compare the color in different points
+	private static boolean compareColor (int[]main, int[] side) throws AWTException {
 		
+		Robot bot = new Robot();
+		
+		if(bot.getPixelColor(main[0], main[1]).getRGB() == bot.getPixelColor(side[0], side[1]).getRGB()) {
+			return true;
+		}
+		else {
+			return false;	
+		}
+		
+	}
 	
 	// A Method to play TAP miniGame
 	private static void playTap(int[] pinPoint) throws AWTException, InterruptedException {
@@ -185,7 +195,7 @@ public class Index {
 					count++;
 					System.out.print(count);
 					}
-				Thread.sleep(100);
+				Thread.sleep(80);
 				if (bot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() != -10592674) {
 					break loop;
 				}
@@ -223,7 +233,7 @@ public class Index {
 	
 	// A Method to put program on pause
 	private static void sleep() throws InterruptedException {
-		Thread.sleep((int)Math.random()*1000 + 300);
+		Thread.sleep((int)Math.random()*800 + 300);
 		
 	}
 	// A Method to move mouse to the coordinates and make a click
