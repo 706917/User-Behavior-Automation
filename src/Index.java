@@ -28,7 +28,7 @@ public class Index {
 	// Possibility of take the pause after played game
 		double possibilityPause = 10;
 	// How long is the rest after play
-		long timeRest = (long) (Math.random()*10000 + 1000);
+		long timeRest = (long) (Math.random()*8000 + 1000);
 		
 		// how many games we want to play
 		int countGames = 0;
