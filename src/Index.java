@@ -22,18 +22,27 @@ import javax.imageio.ImageIO;
 public class Index {
 	public static void main (String[] args) throws AWTException, IOException, InterruptedException {
 		
+		
 // Step 0 : Create a robot
 	//	Robot player = new Robot();
+		int startCoins = 29156;
+		int playGames = 3200;
+		
+		
+		
+		// Start time meter for total Session time
+				long startSessionTime = System.currentTimeMillis();
+				
 		
 	// Possibility of take the pause after played game
-		double possibilityPause = 10;
+		double possibilityPause = 1;
 	// How long is the rest after play
 		long timeRest = (long) (Math.random()*8000 + 1000);
 		
 		// how many games we want to play
 		int countGames = 0;
 		
-		while (countGames<4){
+		while (countGames<playGames){
 // STEP 1 : Get PinPoint coordinates
 			
 // Start play
@@ -91,7 +100,7 @@ public class Index {
 		countGames++;
 		System.out.print("\n\n__ " + countGames + " ____Time: " +
 		(finishTime - startTime)/1000 + "_\n\n");
-		Thread.sleep(500);
+		
 		
 // Calculate chances to take a pause and take it if it happen
 		// Random number between 0 and 100 to compare with possibility
@@ -101,7 +110,18 @@ public class Index {
 			Thread.sleep(timeRest);
 			
 		}
+		else
+		{Thread.sleep(900);}
 		}
+		
+		// Finish Session time
+		long finishSessionTime = System.currentTimeMillis();
+		
+		long SessionTime = finishSessionTime - startSessionTime;
+		System.out.println("\n Session Time : " +
+		SessionTime/60000 + " min. " + SessionTime%60000/1000 + " sec.");
+		System.out.println("Coins on start: " + startCoins);
+	
 	}
 	
 	
@@ -123,7 +143,7 @@ public class Index {
 	// A Method to play SWIPE miniGame
 	private static void playSwipe(int[] pinPoint) throws AWTException, InterruptedException {
 		sleep();
-		System.out.print("Playing Swipe - \n");
+		System.out.print("Playing Swipe - ");
 		//steps to coordinates of CheckPoint from PinPoint (claim white circle)
 				int stepPPCHPX = 50;
 				int stepPPCHPY = 80;
@@ -175,7 +195,7 @@ public class Index {
 						}
 					
 					System.out.print(loop++);
-					Thread.sleep(600);
+					Thread.sleep(800);
 					if (bot.getPixelColor(pinPoint[0]+stepPPFInishX, pinPoint[1]+stepPPFinishY).getRGB() == finishCHPColor) {
 					//					if (bot.getPixelColor(pinPoint[0], pinPoint[1]).getRGB() == pinPoint[2]) {
 						System.out.print("\nSwap finished");
@@ -220,14 +240,14 @@ public class Index {
 		while (tapBot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() == -10592674) {
 		//while (count <5 ) {
 		loop:	
-		for( int x = pinPoint[0]-stepPPTLX; x < 390; x += stepTile) {
-			for( int y = pinPoint[1]-stepPPTLY; y < 650; y += stepTile) {
-				//System.out.print("\nChecking color\n");
+		for( int x = pinPoint[0]-stepPPTLX; x < 450; x += stepTile) {
+			for( int y = pinPoint[1]-stepPPTLY; y < 700; y += stepTile) {
+			//	System.out.print("\nChecking color\n");
 				
 				if (tapBot.getPixelColor(x, y).getRGB() != -11315627) {
 					mouseClick(new int[]{x,y},0);
 					count++;
-					System.out.print(count);
+					System.out.println(count);
 					}
 				
 				Thread.sleep(80);
@@ -243,7 +263,7 @@ public class Index {
 	
 	// A Method to identify the miniGame and get its name
 	private static String getGameName(int[] pinPoint) throws AWTException, InterruptedException {
-		Thread.sleep(500);
+		Thread.sleep(700);
 		
 		// Steps from PinPoint coordinates to the CheckPoint coordinates (letter "S" in the
 		// name of the Swipe game
