@@ -22,7 +22,7 @@ public class Get_Mouse_Coordinates_Color {
 		System.out.print("\nMove your mouse");
 		bot.delay(2000);
 		
-		int step = 5;
+		int step = 3;
 		
 		for (int x = mouseX; x<mouseX +step; x++){
 			for (int y = mouseY; y<mouseY+step; y++){
