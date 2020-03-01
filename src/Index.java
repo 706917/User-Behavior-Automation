@@ -25,8 +25,8 @@ public class Index {
 		
 // Step 0 : Create a robot
 	//	Robot player = new Robot();
-		int startCoins = 29156;
-		int playGames = 3200;
+		int startCoins = 33633;
+		int playGames = 4000;
 		
 		
 		
@@ -165,6 +165,10 @@ public class Index {
 				int stepPPFinishY = 172;
 				int finishCHPColor = -1381654; 
 		
+				// Step from PinPoint to the CheckPoint coordinates  - Swipe - word
+				int stepX_S = 67;
+				int stepY_S = 244;
+		
 		// Main Check point coordinates
 				int[] mainCHP = new int[] {pinPoint[0] - stepPPCHPX, pinPoint[1] - stepPPCHPY};
 		// Top Check point coordinates
@@ -195,8 +199,9 @@ public class Index {
 						}
 					
 					System.out.print(loop++);
-					Thread.sleep(800);
-					if (bot.getPixelColor(pinPoint[0]+stepPPFInishX, pinPoint[1]+stepPPFinishY).getRGB() == finishCHPColor) {
+					Thread.sleep(300);
+					//if (bot.getPixelColor(pinPoint[0]+stepPPFInishX, pinPoint[1]+stepPPFinishY).getRGB() == finishCHPColor) {
+					if(bot.getPixelColor(pinPoint[0]-stepX_S, pinPoint[1]-stepY_S).getRGB() != -1) {
 					//					if (bot.getPixelColor(pinPoint[0], pinPoint[1]).getRGB() == pinPoint[2]) {
 						System.out.print("\nSwap finished");
 						break;
@@ -222,6 +227,11 @@ public class Index {
 	// A Method to play TAP miniGame
 	private static void playTap(int[] pinPoint) throws AWTException, InterruptedException {
 		
+		// Steps from PinPoint coordinates to the CheckPoint coordinates (letter "S" in the
+				// name of the Swipe game
+				int stepX = 63;//90;
+				int stepY = 257;//173;
+		
 		//steps to coordinates of CheckPoint from PinPoint (claim white circle)
 		int stepPPCHPX = 90;
 		int stepPPCHPY = 173;
@@ -237,7 +247,8 @@ public class Index {
 		Robot tapBot = new Robot();
 		int count = 0;	
 		
-		while (tapBot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() == -10592674) {
+		// while (tapBot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() == -10592674) {
+		while (tapBot.getPixelColor(pinPoint[0]-stepX, pinPoint[1]-stepY).getRGB() == -1) {	
 		//while (count <5 ) {
 		loop:	
 		for( int x = pinPoint[0]-stepPPTLX; x < 450; x += stepTile) {
@@ -251,7 +262,8 @@ public class Index {
 					}
 				
 				Thread.sleep(80);
-				if (tapBot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() != -10592674) {
+				if (tapBot.getPixelColor(pinPoint[0]-stepX, pinPoint[1]-stepY).getRGB() != -1) {
+				//if (tapBot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() != -10592674) {
 					break loop;
 				}
 				}
@@ -265,10 +277,15 @@ public class Index {
 	private static String getGameName(int[] pinPoint) throws AWTException, InterruptedException {
 		Thread.sleep(700);
 		
-		// Steps from PinPoint coordinates to the CheckPoint coordinates (letter "S" in the
-		// name of the Swipe game
-		int stepX = 90;
-		int stepY = 173;
+		// Steps from PinPoint coordinates to the CheckPoint coordinates  - Type - word
+		int stepX = 63;//90;
+		int stepY = 257;//173;
+		
+		// Step from PinPoint to the CheckPoint coordinates  - Swipe - word
+		int stepX_S = 67;
+		int stepY_S = 244;
+		
+		// Step between PinPoint and 
 			
 		// Empty string to store the name of miniGame		
 		String name = "";
@@ -276,19 +293,21 @@ public class Index {
 		// robot to get colors at specified points
 		Robot bot = new Robot();
 
-		if (bot.getPixelColor(pinPoint[0]+stepX, pinPoint[1]+stepY).getRGB() != -10592674) {
-			name = "Swipe";
-		}
-		else {
-			name = "Tap";
-		}		
+		if (bot.getPixelColor(pinPoint[0]-stepX, pinPoint[1]-stepY).getRGB() == -1) {//-10592674) {
+			if(bot.getPixelColor(pinPoint[0]-stepX_S, pinPoint[1]-stepY_S).getRGB() == -1) {
+					name = "Swipe";	
+					}
+			else {
+				name = "Tap";
+				}
+			}		
 		
 		return name;
 	}
 	
 	// A Method to put program on pause
 	private static void sleep() throws InterruptedException {
-		Thread.sleep((int)Math.random()*600 + 200);
+		Thread.sleep((int)Math.random()*600 + 300);
 		
 	}
 	// A Method to move mouse to the coordinates and make a click
@@ -298,7 +317,7 @@ public class Index {
 		
 		// Move mouse to the PinPoint and click
 		player.mouseMove(coordinates[0]+shift, coordinates[1]);	
-		player.delay(500);
+		player.delay(100);
 		
 		player.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		player.delay(100);
