@@ -6,6 +6,8 @@ import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import javax.imageio.ImageIO;
 
@@ -101,6 +103,9 @@ public class Index {
 		System.out.print("\n\n__ " + countGames + " ____Time: " +
 		(finishTime - startTime)/1000 + "_\n\n");
 		
+// Check the Witnesses of Big GeoMines
+		witness(pinPoint);
+		
 		
 // Calculate chances to take a pause and take it if it happen
 		// Random number between 0 and 100 to compare with possibility
@@ -111,7 +116,7 @@ public class Index {
 			
 		}
 		else
-		{Thread.sleep(900);}
+		{Thread.sleep((int)(Math.random()*500) + 700);}
 		}
 		
 		// Finish Session time
@@ -127,7 +132,96 @@ public class Index {
 	
 	
 	
-	
+	// A Method to witness a Big GeoMines
+	private static void witness(int[] pinPoint) throws AWTException, InterruptedException {
+
+		//------------ STEPS-----------//
+		// Steps to the check Point #1 - checking for the blue stars
+		int stepX_CheckPoint_1 = -160;
+		int stepY_CheckPoint_1 = -186;
+		
+		// Steps to the check Point #2 - checking for the blue stars
+		int stepX_CheckPoint_2 = -160;
+		int stepY_CheckPoint_2 = -176;
+		
+		// Steps to the First witness point
+		int stepX_Witness_1 = 79;
+		int stepY_Witness_1 = -120;
+				
+		// Steps to the Second witness point
+		int stepX_Witness_2 = 79;
+		int stepY_Witness_2 = -50;
+				
+		// Steps to the Closing Button
+		int stepX_Close = 107;
+		int stepY_Close = -208;
+		
+		//--------------POINTS------------------//		
+		// First Check Point coordinates - blue stars
+		int x_CheckPoint_1 = pinPoint[0] + stepX_CheckPoint_1;
+		int y_CheckPoint_1 = pinPoint[1] + stepY_CheckPoint_1;
+		
+		// Second Check Point coordinates - blue stars
+		int x_CheckPoint_2 = pinPoint[0] + stepX_CheckPoint_2;
+		int y_CheckPoint_2 = pinPoint[1] + stepY_CheckPoint_2;
+		
+		// Color of the Check Point (Blue Star)
+		int checkColor = -12683848;
+		
+		// First Witness Point Coordinates
+		int x_Witness_1 = pinPoint[0] + stepX_Witness_1;
+		int y_Witness_1 = pinPoint[1] + stepY_Witness_1;
+		
+		// Second Witness Point Coordinates
+		int x_Witness_2 = pinPoint[0] + stepX_Witness_2;
+		int y_Witness_2 = pinPoint[1] + stepY_Witness_2;
+		
+		// Closing Button Point Coordinates
+		int x_Close = pinPoint[0] + stepX_Close;
+		int y_Close = pinPoint[1] + stepY_Close;
+		
+		
+		
+		Robot bot = new Robot();
+		
+		if (bot.getPixelColor(x_CheckPoint_1, y_CheckPoint_1).getRGB() == checkColor) {
+			// Click on stars
+			mouseClick(new int[] {x_CheckPoint_1, y_CheckPoint_1}, 0);
+			Thread.sleep(500);
+			
+			// Click on witness
+			mouseClick(new int[] {x_Witness_1, y_Witness_1}, 0);
+			Thread.sleep(100);
+			mouseClick(new int[] {x_Witness_2, y_Witness_2}, 0);
+			
+			// Click on close button
+			mouseClick(new int[] {x_Close, y_Close}, 0);
+					
+				}
+		else if (bot.getPixelColor(x_CheckPoint_2, y_CheckPoint_2).getRGB() == checkColor) {
+			// Click on stars
+			mouseClick(new int[] {x_CheckPoint_1, y_CheckPoint_1}, 0);
+			Thread.sleep(500);
+						
+			// Click on witness
+			mouseClick(new int[] {x_Witness_1, y_Witness_1}, 0);
+			Thread.sleep(100);
+			mouseClick(new int[] {x_Witness_2, y_Witness_2}, 0);
+						
+			// Click on close button
+			mouseClick(new int[] {x_Close, y_Close}, 0);
+				}
+		
+		
+		
+			
+		}
+		
+		
+			
+
+
+
 	// A Method to play the miniGame depending on its name
 	private static void play(String gameName, int[] pinPoint) throws AWTException, InterruptedException {
 		if (gameName == "Tap") {
