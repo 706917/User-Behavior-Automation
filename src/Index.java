@@ -27,8 +27,8 @@ public class Index {
 		
 // Step 0 : Create a robot
 	//	Robot player = new Robot();
-		int startCoins = 33633;
-		int playGames = 4000;
+		int startCoins = 688;
+		int playGames = 2000;
 		
 		
 		
@@ -37,12 +37,12 @@ public class Index {
 				
 		
 	// Possibility of take the pause after played game
-		double possibilityPause = 1;
-	// How long is the rest after play
+		double possibilityPause = 0;
+	// How long is the pause after play
 		long timeRest = (long) (Math.random()*8000 + 1000);
 		
 		// how many games we want to play
-		int countGames = 0;
+		int countGames = 1;
 		
 		while (countGames<playGames){
 // STEP 1 : Get PinPoint coordinates
@@ -93,7 +93,7 @@ public class Index {
 		System.out.print("Game chosen - ");
 		
 		// Play the miniGame
-		play(gameName, pinPoint);	
+		play(gameName, pinPoint, countGames);	
 		
 // Stop playTime and print duration
 		long finishTime = System.currentTimeMillis();
@@ -103,8 +103,13 @@ public class Index {
 		System.out.print("\n\n__ " + countGames + " ____Time: " +
 		(finishTime - startTime)/1000 + "_\n\n");
 		
-// Check the Witnesses of Big GeoMines
-		witness(pinPoint);
+		Thread.sleep(500);
+		
+
+					
+					
+// Check the pop Up of Big GeoMines
+		popup_BigGeoMine(pinPoint);
 		
 		
 // Calculate chances to take a pause and take it if it happen
@@ -116,8 +121,10 @@ public class Index {
 			
 		}
 		else
-		{Thread.sleep((int)(Math.random()*500) + 700);}
+		{Thread.sleep((int)(Math.random()*500) + 300);}
 		}
+
+
 		
 		// Finish Session time
 		long finishSessionTime = System.currentTimeMillis();
@@ -131,7 +138,22 @@ public class Index {
 	
 	
 	
-	
+	// A Method to check the existence of pop up window and click the button on it if check passed
+	private static void popup_BigGeoMine(int[] pinPoint) throws AWTException, InterruptedException {
+		// TODO Auto-generated method stub
+		int stepX = 58;
+		int stepY = 133;
+		int color = -16139610;
+		Robot bot = new Robot();
+		
+		if (bot.getPixelColor(pinPoint[0]+stepX, pinPoint[1]+stepY).getRGB() == color) {
+			mouseClick(new int[] {pinPoint[0]+stepX, pinPoint[1]+stepY}, 0);
+		}
+	}
+
+
+
+
 	// A Method to witness a Big GeoMines
 	private static void witness(int[] pinPoint) throws AWTException, InterruptedException {
 
@@ -141,8 +163,8 @@ public class Index {
 		int stepY_CheckPoint_1 = -186;
 		
 		// Steps to the check Point #2 - checking for the blue stars
-		int stepX_CheckPoint_2 = -160;
-		int stepY_CheckPoint_2 = -176;
+		int stepX_CheckPoint_2 = -158;
+		int stepY_CheckPoint_2 = -130;
 		
 		// Steps to the First witness point
 		int stepX_Witness_1 = 79;
@@ -166,7 +188,7 @@ public class Index {
 		int y_CheckPoint_2 = pinPoint[1] + stepY_CheckPoint_2;
 		
 		// Color of the Check Point (Blue Star)
-		int checkColor = -12683848;
+		int checkColor = -12683849;
 		
 		// First Witness Point Coordinates
 		int x_Witness_1 = pinPoint[0] + stepX_Witness_1;
@@ -184,24 +206,27 @@ public class Index {
 		
 		Robot bot = new Robot();
 		
-		if (bot.getPixelColor(x_CheckPoint_1, y_CheckPoint_1).getRGB() == checkColor) {
-			// Click on stars
-			mouseClick(new int[] {x_CheckPoint_1, y_CheckPoint_1}, 0);
-			Thread.sleep(500);
-			
-			// Click on witness
-			mouseClick(new int[] {x_Witness_1, y_Witness_1}, 0);
-			Thread.sleep(100);
-			mouseClick(new int[] {x_Witness_2, y_Witness_2}, 0);
-			
-			// Click on close button
-			mouseClick(new int[] {x_Close, y_Close}, 0);
+		//if (bot.getPixelColor(x_CheckPoint_1, y_CheckPoint_1).getRGB() == checkColor) {
+//			System.out.println("Topstars");
+//			mouseClick(new int[] {x_CheckPoint_1, y_CheckPoint_1}, 0);
+//			Thread.sleep(500);
+//			
+//			// Click on witness
+//			mouseClick(new int[] {x_Witness_1, y_Witness_1}, 0);
+//			Thread.sleep(100);
+//			mouseClick(new int[] {x_Witness_2, y_Witness_2}, 0);
+//			
+//			// Click on close button
+//			mouseClick(new int[] {x_Close, y_Close}, 0);
 					
-				}
-		else if (bot.getPixelColor(x_CheckPoint_2, y_CheckPoint_2).getRGB() == checkColor) {
+		//		}
+		System.out.println("Witness");
+			Thread.sleep(100);
+		if (bot.getPixelColor(x_CheckPoint_2, y_CheckPoint_2).getRGB() != -15789806) {//checkColor) {
+			
 			// Click on stars
-			mouseClick(new int[] {x_CheckPoint_1, y_CheckPoint_1}, 0);
-			Thread.sleep(500);
+			mouseClick(new int[] {x_CheckPoint_2, y_CheckPoint_2}, 0);
+			Thread.sleep(200);
 						
 			// Click on witness
 			mouseClick(new int[] {x_Witness_1, y_Witness_1}, 0);
@@ -210,8 +235,8 @@ public class Index {
 						
 			// Click on close button
 			mouseClick(new int[] {x_Close, y_Close}, 0);
-				}
-		
+			}
+//		
 		
 		
 			
@@ -223,21 +248,21 @@ public class Index {
 
 
 	// A Method to play the miniGame depending on its name
-	private static void play(String gameName, int[] pinPoint) throws AWTException, InterruptedException {
+	private static void play(String gameName, int[] pinPoint, int countGames) throws AWTException, InterruptedException {
 		if (gameName == "Tap") {
-			playTap(pinPoint);
+			playTap(pinPoint, countGames);
 			
 		}
 		else {
-			playSwipe(pinPoint);
+			playSwipe(pinPoint, countGames);
 		}	
 		
 	}
 
 	// A Method to play SWIPE miniGame
-	private static void playSwipe(int[] pinPoint) throws AWTException, InterruptedException {
+	private static void playSwipe(int[] pinPoint, int countGames) throws AWTException, InterruptedException {
 		sleep();
-		System.out.print("Playing Swipe - ");
+		System.out.print("Playing Swipe - \n");
 		//steps to coordinates of CheckPoint from PinPoint (claim white circle)
 				int stepPPCHPX = 50;
 				int stepPPCHPY = 80;
@@ -288,12 +313,22 @@ public class Index {
 					else if (compareColor(mainCHP,bottomCHP) == true) {
 						mouseClick(bottomCHP, 0);
 					}
-					else {
+					else if (compareColor(mainCHP,leftCHP) == true) {
 						mouseClick(leftCHP, 0);
 						}
+	//========================== Regular brake every 500 games=====================
+					if (countGames%500 == 0) {
+						System.out.println("\nBIG BRAKE\n");
+						Thread.sleep((int)(Math.random()*6000 + 300000));
+						System.out.println("\nBIG BRAKE END\n");
+					}
+					if (countGames == 2000) {
+						Thread.sleep(900000000);
+					}
+	//============================================================================
 					
-					System.out.print(loop++);
-					Thread.sleep(300);
+					System.out.println(loop++);
+					//Thread.sleep(100);
 					//if (bot.getPixelColor(pinPoint[0]+stepPPFInishX, pinPoint[1]+stepPPFinishY).getRGB() == finishCHPColor) {
 					if(bot.getPixelColor(pinPoint[0]-stepX_S, pinPoint[1]-stepY_S).getRGB() != -1) {
 					//					if (bot.getPixelColor(pinPoint[0], pinPoint[1]).getRGB() == pinPoint[2]) {
@@ -319,7 +354,7 @@ public class Index {
 	}
 	
 	// A Method to play TAP miniGame
-	private static void playTap(int[] pinPoint) throws AWTException, InterruptedException {
+	private static void playTap(int[] pinPoint, int countGames) throws AWTException, InterruptedException {
 		
 		// Steps from PinPoint coordinates to the CheckPoint coordinates (letter "S" in the
 				// name of the Swipe game
@@ -337,7 +372,7 @@ public class Index {
 		// Step between tiles 
 		int stepTile = 110;
 		
-		System.out.print("Playing Tap - ");
+		System.out.print("Playing Tap - \n");
 		Robot tapBot = new Robot();
 		int count = 0;	
 		
@@ -346,7 +381,7 @@ public class Index {
 		//while (count <5 ) {
 		loop:	
 		for( int x = pinPoint[0]-stepPPTLX; x < 450; x += stepTile) {
-			for( int y = pinPoint[1]-stepPPTLY; y < 700; y += stepTile) {
+			for( int y = pinPoint[1]-stepPPTLY; y < 720; y += stepTile) {
 			//	System.out.print("\nChecking color\n");
 				
 				if (tapBot.getPixelColor(x, y).getRGB() != -11315627) {
@@ -354,13 +389,25 @@ public class Index {
 					count++;
 					System.out.println(count);
 					}
+
 				
 				Thread.sleep(80);
 				if (tapBot.getPixelColor(pinPoint[0]-stepX, pinPoint[1]-stepY).getRGB() != -1) {
 				//if (tapBot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() != -10592674) {
 					break loop;
 				}
+				
 				}
+			// =================Regular brake every 500 games=========================
+			if (countGames%500 == 0) {
+				System.out.println("\nBIG BRAKE\n");
+				Thread.sleep((int)(Math.random()*6000 + 50000));
+				System.out.println("\nBIG BRAKE END\n");
+			}
+			if (countGames == 2000) {
+				Thread.sleep(900000000);
+			}
+//================================================================
 			}
 		}
 		System.out.print("\nTap finished");		
@@ -369,7 +416,7 @@ public class Index {
 	
 	// A Method to identify the miniGame and get its name
 	private static String getGameName(int[] pinPoint) throws AWTException, InterruptedException {
-		Thread.sleep(700);
+		Thread.sleep(200);
 		
 		// Steps from PinPoint coordinates to the CheckPoint coordinates  - Type - word
 		int stepX = 63;//90;
@@ -401,7 +448,7 @@ public class Index {
 	
 	// A Method to put program on pause
 	private static void sleep() throws InterruptedException {
-		Thread.sleep((int)Math.random()*600 + 300);
+		Thread.sleep((int)Math.random()*200 + 300);
 		
 	}
 	// A Method to move mouse to the coordinates and make a click
@@ -411,7 +458,7 @@ public class Index {
 		
 		// Move mouse to the PinPoint and click
 		player.mouseMove(coordinates[0]+shift, coordinates[1]);	
-		player.delay(100);
+		player.delay(80);
 		
 		player.mousePress(InputEvent.BUTTON1_DOWN_MASK);
 		player.delay(100);
