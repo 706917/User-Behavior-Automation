@@ -316,18 +316,15 @@ public class Index {
 					else if (compareColor(mainCHP,leftCHP) == true) {
 						mouseClick(leftCHP, 0);
 						}
+					System.out.println(loop++);
 	//========================== Regular brake every 500 games=====================
-					if (countGames%500 == 0) {
-						System.out.println("\nBIG BRAKE\n");
-						Thread.sleep((int)(Math.random()*6000 + 300000));
-						System.out.println("\nBIG BRAKE END\n");
-					}
-					if (countGames == 2000) {
+					
+					if (countGames == 1999) {
 						Thread.sleep(900000000);
 					}
 	//============================================================================
 					
-					System.out.println(loop++);
+					
 					//Thread.sleep(100);
 					//if (bot.getPixelColor(pinPoint[0]+stepPPFInishX, pinPoint[1]+stepPPFinishY).getRGB() == finishCHPColor) {
 					if(bot.getPixelColor(pinPoint[0]-stepX_S, pinPoint[1]-stepY_S).getRGB() != -1) {
@@ -399,12 +396,8 @@ public class Index {
 				
 				}
 			// =================Regular brake every 500 games=========================
-			if (countGames%500 == 0) {
-				System.out.println("\nBIG BRAKE\n");
-				Thread.sleep((int)(Math.random()*6000 + 50000));
-				System.out.println("\nBIG BRAKE END\n");
-			}
-			if (countGames == 2000) {
+			
+			if (countGames == 1999) {
 				Thread.sleep(900000000);
 			}
 //================================================================
