@@ -6,6 +6,7 @@ import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -28,7 +29,7 @@ public class Index {
 // Step 0 : Create a robot
 	//	Robot player = new Robot();
 		int startCoins = 688;
-		int playGames = 2000;
+		int playGames = 5000;
 		
 		
 		
@@ -42,7 +43,7 @@ public class Index {
 		long timeRest = (long) (Math.random()*8000 + 1000);
 		
 		// how many games we want to play
-		int countGames = 1;
+		int countGames = 0;
 		
 		while (countGames<playGames){
 // STEP 1 : Get PinPoint coordinates
@@ -54,7 +55,7 @@ public class Index {
 		int[] pinPoint = getPinPointCoordinates();
 		
 		System.out.print("Pin Point coordinates identifyed: \n" +
-		"x = " + pinPoint[0] + " : y =  " + pinPoint[1]);
+		"x = " + pinPoint[0] + " : y =  " + pinPoint[1] + "\n Color: " + pinPoint[2]);
 		
 //STEP 2 : Create a list with coordinates of points with 
 // specified blue color around PinPoint. That points will be randomly chosen 
@@ -84,7 +85,7 @@ public class Index {
 		// Move mouse and click
 		mouseClick(yesButtonCoordinates,0);
 		System.out.print("\nMiniGame initiated\n");
-		sleep();
+	//	sleep();
 		
 // Identify the miniGame type and play it
 		
@@ -121,7 +122,7 @@ public class Index {
 			
 		}
 		else
-		{Thread.sleep((int)(Math.random()*500) + 300);}
+		{Thread.sleep((int)(Math.random()*500) + 500);}
 		}
 
 
@@ -250,10 +251,12 @@ public class Index {
 	// A Method to play the miniGame depending on its name
 	private static void play(String gameName, int[] pinPoint, int countGames) throws AWTException, InterruptedException {
 		if (gameName == "Tap") {
-			playTap(pinPoint, countGames);
-			
+			playTap(pinPoint, countGames);			
 		}
-		else {
+		else if (gameName == "Pair") {
+			playPair(pinPoint, countGames);
+		}
+		else if (gameName == "Swipe"){
 			playSwipe(pinPoint, countGames);
 		}	
 		
@@ -279,12 +282,7 @@ public class Index {
 				int stepLeftPPX = 132;
 				int stepLeftPPY = 50;
 		
-		// Step to the Finish check point
-				int stepPPFInishX = 100;
-				int stepPPFinishY = 172;
-				int finishCHPColor = -1381654; 
-		
-				// Step from PinPoint to the CheckPoint coordinates  - Swipe - word
+		// Step from PinPoint to the CheckPoint coordinates  - Swipe - word
 				int stepX_S = 67;
 				int stepY_S = 244;
 		
@@ -303,7 +301,7 @@ public class Index {
 				// Checking loop
 				int loop = 0;
 				
-				while (loop<10) {
+				while (bot.getPixelColor(pinPoint[0]-stepX_S, pinPoint[1]-stepY_S).getRGB() == -1) {
 					if (compareColor(mainCHP,topCHP) == true) {
 						mouseClick(topCHP, 0);
 					}
@@ -324,17 +322,14 @@ public class Index {
 					}
 	//============================================================================
 					
-					
-					//Thread.sleep(100);
-					//if (bot.getPixelColor(pinPoint[0]+stepPPFInishX, pinPoint[1]+stepPPFinishY).getRGB() == finishCHPColor) {
-					if(bot.getPixelColor(pinPoint[0]-stepX_S, pinPoint[1]-stepY_S).getRGB() != -1) {
-					//					if (bot.getPixelColor(pinPoint[0], pinPoint[1]).getRGB() == pinPoint[2]) {
-						System.out.print("\nSwap finished");
-						break;
+					Thread.sleep(100);
+//					if(bot.getPixelColor(pinPoint[0]-stepX_S, pinPoint[1]-stepY_S).getRGB() != -1) {
+//						System.out.print("\nSwap finished");
+//						break;
 						
 					}
 					}
-				}
+				
 	
 	// A Method to compare the color in different points for Swipe game
 	private static boolean compareColor (int[]main, int[] side) throws AWTException {
@@ -406,42 +401,103 @@ public class Index {
 		System.out.print("\nTap finished");		
 	}
 	
+
+///===================================
+	// A Method to play TAP miniGame
+		private static void playPair(int[] pinPoint, int countGames) throws AWTException, InterruptedException {
+			
+			// Steps from PinPoint coordinates to the CheckPoint coordinates (letter "T" in the
+					// word THE 
+					int stepX = 109;//90;
+					int stepY = 159;//173;
+			
+			// Steps from PinPoint to the center of first tile
+			int stepPPTLX = -147;
+			int stepPPTLY = -144;
+			
+			// Step between tiles 
+			int stepTile = 110;
+			
+			System.out.print("Playing PAIRS - \n");
+			Robot tapBot = new Robot();
+			int count = 0;	
+		
+			bigloop:
+			while (tapBot.getPixelColor(pinPoint[0]+stepX, pinPoint[1]+stepY).getRGB() != -1513240) {
+			Boolean unique;
+			HashSet<Integer> set = new HashSet<Integer>();
+			loop:
+			for( int x = pinPoint[0]+stepPPTLX; x < 410; x += stepTile) {
+				for( int y = pinPoint[1]+stepPPTLY; y < 690; y += stepTile) {
+					
+					int color = tapBot.getPixelColor(x, y).getRGB();
+					unique = set.add(color);
+					if (!unique) {
+						mouseClick(new int[] {x, y}, 0);
+						System.out.println(++count);
+						break loop;
+					}
+			
+					Thread.sleep(100);
+					
+					}
+				// =================Regular brake every 500 games=========================
+				
+				if (countGames == 1999) {
+					Thread.sleep(900000000);
+				}
+	//================================================================
+				}
+			if (count >10) { break bigloop;}
+			}
+			System.out.print("\nPAIR finished");		
+		}
+	
 	
 	// A Method to identify the miniGame and get its name
 	private static String getGameName(int[] pinPoint) throws AWTException, InterruptedException {
-		Thread.sleep(200);
+		Thread.sleep(300);
 		
-		// Steps from PinPoint coordinates to the CheckPoint coordinates  - Type - word
-		int stepX = 63;//90;
-		int stepY = 257;//173;
+		// Steps from PinPoint coordinates to the CheckPoint coordinates  - The - word
+		int stepX_P = 23;//61;;
+		int stepY_P = -256;//-244;
+		
+		// Steps from PinPoint coordinates to the CheckPoint coordinates  - Tap - word
+		int stepX_T = 64;//90;
+		int stepY_T = -253;//173;
 		
 		// Step from PinPoint to the CheckPoint coordinates  - Swipe - word
-		int stepX_S = 67;
-		int stepY_S = 244;
+		int stepX_S = -67;
+		int stepY_S = -244;
 		
 		// Step between PinPoint and 
 			
 		// Empty string to store the name of miniGame		
-		String name = "";
+		String name = "no game name";
 		
 		// robot to get colors at specified points
 		Robot bot = new Robot();
 
-		if (bot.getPixelColor(pinPoint[0]-stepX, pinPoint[1]-stepY).getRGB() == -1) {//-10592674) {
-			if(bot.getPixelColor(pinPoint[0]-stepX_S, pinPoint[1]-stepY_S).getRGB() == -1) {
+		
+			if(bot.getPixelColor(pinPoint[0]+stepX_S, pinPoint[1]+stepY_S).getRGB() == -1) {
 					name = "Swipe";	
 					}
-			else {
+			
+			if(bot.getPixelColor(pinPoint[0]+stepX_T, pinPoint[1]+stepY_T).getRGB() == -1){
 				name = "Tap";
-				}
-			}		
+				}	
+			
+			if (bot.getPixelColor(pinPoint[0]+stepX_P, pinPoint[1]+stepY_P).getRGB() == -1) {
+				name = "Pair";
+			}
 		
+			System.out.println(name);
 		return name;
 	}
 	
 	// A Method to put program on pause
 	private static void sleep() throws InterruptedException {
-		Thread.sleep((int)Math.random()*200 + 300);
+		Thread.sleep((int)Math.random()*200 + 200);
 		
 	}
 	// A Method to move mouse to the coordinates and make a click
@@ -450,7 +506,7 @@ public class Index {
 		Robot player = new Robot();
 		
 		// Move mouse to the PinPoint and click
-		player.mouseMove(coordinates[0]+shift, coordinates[1]);	
+		player.mouseMove(coordinates[0]+shift/3, coordinates[1]+shift);	
 		player.delay(80);
 		
 		player.mousePress(InputEvent.BUTTON1_DOWN_MASK);
