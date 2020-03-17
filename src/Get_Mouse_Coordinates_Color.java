@@ -10,7 +10,7 @@ public class Get_Mouse_Coordinates_Color {
 		Robot bot = new Robot();
 		
 		// Wait mouse get desired position
-		bot.delay(3000);
+		bot.delay(2000);
 		
 		System.out.print("Mouse coordinates: \n\n");
 		int mouseX = (int)MouseInfo.getPointerInfo().getLocation().getX();
@@ -22,7 +22,7 @@ public class Get_Mouse_Coordinates_Color {
 		System.out.print("\nMove your mouse");
 		bot.delay(2000);
 		
-		int step = 3;
+		int step = 5;
 		
 		for (int x = mouseX; x<mouseX +step; x++){
 			for (int y = mouseY; y<mouseY+step; y++){
