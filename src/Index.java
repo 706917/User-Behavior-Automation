@@ -29,7 +29,7 @@ public class Index {
 // Step 0 : Create a robot
 	//	Robot player = new Robot();
 		int startCoins = 688;
-		int playGames = 5000;
+		int playGames = 10000;
 		
 		
 		
@@ -72,7 +72,7 @@ public class Index {
 		
 		// Move mouse to the PinPoint and click
 		// shift on X to get out from PinPoint
-		int shift = 0;
+		int shift = 10;
 		mouseClick(pinPoint, shift);
 		System.out.print("\nPinPoint clicked");
 		sleep();
@@ -299,8 +299,8 @@ public class Index {
 				
 				Robot bot = new Robot();
 				// Checking loop
-				int loop = 0;
-				
+				int count = 0;
+				bigloop:
 				while (bot.getPixelColor(pinPoint[0]-stepX_S, pinPoint[1]-stepY_S).getRGB() == -1) {
 					if (compareColor(mainCHP,topCHP) == true) {
 						mouseClick(topCHP, 0);
@@ -314,20 +314,21 @@ public class Index {
 					else if (compareColor(mainCHP,leftCHP) == true) {
 						mouseClick(leftCHP, 0);
 						}
-					System.out.println(loop++);
+					System.out.println(++count);
 	//========================== Regular brake every 500 games=====================
 					
-					if (countGames == 1999) {
-						Thread.sleep(900000000);
-					}
+//					if (countGames == 4999) {
+//						Thread.sleep(900000000);
+//					}
 	//============================================================================
 					
 					Thread.sleep(100);
 //					if(bot.getPixelColor(pinPoint[0]-stepX_S, pinPoint[1]-stepY_S).getRGB() != -1) {
 //						System.out.print("\nSwap finished");
 //						break;
-						
+					if (count >10) { break bigloop;}	
 					}
+				System.out.println("Swipe finished\n");
 					}
 				
 	
@@ -369,6 +370,7 @@ public class Index {
 		int count = 0;	
 		
 		// while (tapBot.getPixelColor(pinPoint[0]+stepPPCHPX, pinPoint[1]+stepPPCHPY).getRGB() == -10592674) {
+		bigloop:
 		while (tapBot.getPixelColor(pinPoint[0]-stepX, pinPoint[1]-stepY).getRGB() == -1) {	
 		//while (count <5 ) {
 		loop:	
@@ -392,11 +394,12 @@ public class Index {
 				}
 			// =================Regular brake every 500 games=========================
 			
-			if (countGames == 1999) {
-				Thread.sleep(900000000);
-			}
+//			if (countGames == 4999) {
+//				Thread.sleep(900000000);
+//			}
 //================================================================
 			}
+		if (count >10) { break bigloop;}
 		}
 		System.out.print("\nTap finished");		
 	}
@@ -435,17 +438,15 @@ public class Index {
 					if (!unique) {
 						mouseClick(new int[] {x, y}, 0);
 						System.out.println(++count);
+						Thread.sleep(100);
 						break loop;
-					}
-			
-					Thread.sleep(100);
-					
+						}					
 					}
 				// =================Regular brake every 500 games=========================
 				
-				if (countGames == 1999) {
-					Thread.sleep(900000000);
-				}
+//				if (countGames == 4999) {
+//					Thread.sleep(900000000);
+//				}
 	//================================================================
 				}
 			if (count >10) { break bigloop;}
