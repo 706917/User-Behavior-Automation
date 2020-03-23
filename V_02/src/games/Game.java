@@ -20,8 +20,7 @@ public class Game {
 
 	// A Method to identify the miniGame type and get its name
 	static String getGameName(int[] pinPoint) throws InterruptedException, AWTException {
-		Thread.sleep(300);
-
+		
 		// Steps from PinPoint coordinates to the CheckPoint coordinates - "The" - word
 		// in "Tap The Pair"
 		int stepX_P = 23;// 61;;
@@ -38,7 +37,7 @@ public class Game {
 		// Step between PinPoint and
 
 		// Empty string to store the name of miniGame
-		String name = "no game name";
+		String name = "";
 
 		// robot to get colors at specified points
 		Robot bot = new Robot();
@@ -55,7 +54,9 @@ public class Game {
 			name = "Pair";
 		}
 
-		System.out.println(name);
+		if (name==""){
+				System.out.println("no game");
+		}
 		return name;
 	}
 }
