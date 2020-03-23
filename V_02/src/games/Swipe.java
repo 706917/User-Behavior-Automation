@@ -7,6 +7,9 @@ import java.util.Arrays;
 import main.Mouse;
 
 public class Swipe {
+	
+	// How long to wait
+		private static int wait = (int)(Math.random()*300 + 400);
 
 	// A Method to play SWIPE miniGame
 	static void play(int[] pinPoint) throws AWTException, InterruptedException {
@@ -29,10 +32,6 @@ public class Swipe {
 		int stepLeftPPX = 132;
 		int stepLeftPPY = 50;
 
-		// Step from PinPoint to the CheckPoint coordinates - Swipe - word
-		int stepX_S = -67;
-		int stepY_S = -244;
-
 		// Main Check point coordinates
 		int[] mainCHP = new int[] { pinPoint[0] - stepPPCHPX, pinPoint[1] - stepPPCHPY };
 		// Top Check point coordinates
@@ -44,14 +43,14 @@ public class Swipe {
 		// Left Check point coordinates
 		int[] leftCHP = new int[] { pinPoint[0] - stepLeftPPX, pinPoint[1] + stepLeftPPY };
 
-		System.out.println("+++Playing Swipe+++");
+		System.out.println("---Playing Swipe---");
 
-		Robot bot = new Robot();
+		
 		// Checking loop
 		int count = 0;
 
-		// while(Game.getGameName(pinPoint)=="Swipe") {
-		while (bot.getPixelColor(pinPoint[0] + stepX_S, pinPoint[1] + stepY_S).getRGB() == -1) {
+		bigloop:
+		while(Game.getGameName(pinPoint)=="Swipe") {
 			if (compareColor(mainCHP, topCHP) == true) {
 				Mouse.click(topCHP);
 			} else if (compareColor(mainCHP, rightCHP) == true) {
@@ -63,7 +62,11 @@ public class Swipe {
 			}
 			System.out.println(++count);
 
-			Thread.sleep(100);
+			Thread.sleep(wait);
+			
+			if (count > 10) {
+				break bigloop;
+			}
 		}
 	}
 
