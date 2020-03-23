@@ -10,7 +10,7 @@ public class Index {
 	public static void main(String[] args) throws AWTException, IOException, InterruptedException {
 
 		// Amount of games to be played
-		int playGames = 1;
+		int playGames = 3000;
 		// Games played counter
 		int countGames = 0;
 
@@ -19,19 +19,20 @@ public class Index {
 
 		// Start the FUN
 		while (countGames < playGames) {
+			System.out.println("\n_______" + ++countGames + "_______");
 
 			// Click on PinPoint
 			Mouse.clickPinPoint(bot.getPinPoint());
 
-			Thread.sleep(300);
+			Thread.sleep(600);
 
 			Game.play(bot.getPinPoint());
+			
+			BigGeoMine.check(bot.getPinPoint());
 
-			Thread.sleep(500);
-
-			System.out.println("_______" + ++countGames + "_______");
-
+			Thread.sleep(1400);	
 		}
+		System.out.println("\n_______FINISH_______");
 
 	}
 
