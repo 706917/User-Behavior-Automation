@@ -25,7 +25,7 @@ public class Mouse {
 	static void clickPinPoint(int[] coordinates) throws AWTException, InterruptedException {
 
 		// Shift mouse from coordinates before click
-		int shift = 0;
+		int shift = 10;
 		// Shift from PinPoint to the "Yes" button
 		int shiftYesBottonX = 40;
 		int shiftYesBottonY = 70;
@@ -41,7 +41,7 @@ public class Mouse {
 		player.delay(100);
 		player.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 
-		Thread.sleep(300);
+		Thread.sleep(500);
 
 		// Move mouse to the "Yes" button and click
 		player.mouseMove(coordinates[0] + shiftYesBottonX, coordinates[1] + shiftYesBottonY);
