@@ -38,11 +38,7 @@ public class Starter {
 
 	}
 
-	@Override
-	public String toString() {
-		return "pinPoint=" + Arrays.toString(pinPoint);
-	}
-
+	
 	// A method to get coordinates of PinPoint
 	private static int[] getPinPointCoordinates() throws AWTException, IOException {
 
@@ -50,7 +46,7 @@ public class Starter {
 		int step = 332;
 		// The path to the image file which serves as a anchor-point
 		// to calculate all coordinates in the mirrored screen
-		String imageName = "src/img/ImageToSearch_01.png";// HomeButton.png"; //
+		String imageName = "src/img/HomeButton.png"; // ImageToSearch_01.png";// 
 
 		// capture current screen and create an object with it
 		Robot robot = new Robot();
