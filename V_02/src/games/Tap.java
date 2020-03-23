@@ -7,6 +7,9 @@ import java.util.Arrays;
 import main.Mouse;
 
 public class Tap {
+	
+	// How long to wait
+		private static int wait = (int)(Math.random()*300 + 300);
 
 	// A Method to play TAP miniGame
 	static void play(int[] pinPoint) throws AWTException, InterruptedException {
@@ -24,12 +27,13 @@ public class Tap {
 		// Step between tiles
 		int stepTile = 110;
 
-		System.out.println("+++Playing Tap+++");
+		System.out.println("---Playing Tap---");
 		Robot tapBot = new Robot();
 		int count = 0;
 
-		// while(Game.getGameName(pinPoint)=="Tap") {
-		while (tapBot.getPixelColor(pinPoint[0] - stepX, pinPoint[1] - stepY).getRGB() == -1) {
+		bigloop:
+		while(Game.getGameName(pinPoint)=="Tap") {
+		//while (tapBot.getPixelColor(pinPoint[0] - stepX, pinPoint[1] - stepY).getRGB() == -1) {
 			// while (count <5 ) {
 			loop: for (int x = pinPoint[0] - stepPPTLX; x < 450; x += stepTile) {
 				for (int y = pinPoint[1] - stepPPTLY; y < 720; y += stepTile) {
@@ -38,6 +42,7 @@ public class Tap {
 					if (tapBot.getPixelColor(x, y).getRGB() != -11315627) {
 						Mouse.click(new int[] { x, y });
 						System.out.println(++count);
+						Thread.sleep(wait);
 					}
 
 					Thread.sleep(80);
@@ -47,6 +52,9 @@ public class Tap {
 					}
 
 				}
+			}
+			if (count > 10) {
+				break bigloop;
 			}
 		}
 		System.out.println("---Tap finished---");
