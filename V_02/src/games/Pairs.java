@@ -10,7 +10,7 @@ import main.Mouse;
 class Pairs {
 	
 	// How long to wait
-	private static int wait = (int)(Math.random()*300 + 300);
+	private static int wait = (int)(Math.random()*100 + 200);
 
 	// A Method to play Pair miniGame
 	static void play(int[] pinPoint) throws AWTException, InterruptedException {

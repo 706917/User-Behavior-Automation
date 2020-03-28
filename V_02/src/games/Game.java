@@ -19,7 +19,7 @@ public class Game {
 	}
 
 	// A Method to identify the miniGame type and get its name
-	static String getGameName(int[] pinPoint) throws InterruptedException, AWTException {
+	public static String getGameName(int[] pinPoint) throws InterruptedException, AWTException {
 		
 		// Steps from PinPoint coordinates to the CheckPoint coordinates - "The" - word
 		// in "Tap The Pair"
