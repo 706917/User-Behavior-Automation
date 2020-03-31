@@ -30,7 +30,7 @@ public class Mouse {
 		
 		while (Game.getGameName(coordinates)=="") {
 
-		BigGeoMine.check(coordinates);
+			PopUpCheck.check(coordinates);
 
 		// Shift mouse from coordinates before click
 		int shift = (int)(Math.random()*60);
