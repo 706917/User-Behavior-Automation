@@ -14,10 +14,7 @@ public class Game {
 			Pairs.play(pinPoint);
 		} else if (gameName == "Swipe") {
 			Swipe.play(pinPoint);
-		} else if(gameName == "Drag") {
-			Drag.play(pinPoint);
 		}
-		
 
 	}
 
@@ -36,10 +33,6 @@ public class Game {
 		// Step from PinPoint to the CheckPoint coordinates - Swipe - word
 		int stepX_S = -67;
 		int stepY_S = -244;
-		
-		// Step from PinPoint to the CheckPoint coordinates - Swipe - word
-		int stepX_D = 42;
-		int stepY_D = -239;
 
 		// Step between PinPoint and
 
@@ -59,9 +52,6 @@ public class Game {
 
 		if (bot.getPixelColor(pinPoint[0] + stepX_P, pinPoint[1] + stepY_P).getRGB() == -1) {
 			name = "Pair";
-		}
-		if (bot.getPixelColor(pinPoint[0] + stepX_D, pinPoint[1] + stepY_D).getRGB() == -1) {
-			name = "Drag";
 		}
 
 		if (name==""){

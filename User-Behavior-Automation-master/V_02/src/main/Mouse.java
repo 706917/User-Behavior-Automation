@@ -12,38 +12,18 @@ public class Mouse {
 	public static void click(int[] coordinates) throws AWTException, InterruptedException {
 
 		// Create a robot
-		Robot bot = new Robot();
+		Robot player = new Robot();
 
 		// Move mouse to the Point and click
-		bot.mouseMove(coordinates[0], coordinates[1]);
-		bot.delay(80);
+		player.mouseMove(coordinates[0], coordinates[1]);
+		player.delay(80);
 
-		bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-		bot.delay(100);
-		bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		
-		bot.delay(300);
+		player.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+		player.delay(100);
+		player.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 		
 		
 
-	}
-	
-	public static void shift(int[]down, int[]up) throws AWTException {
-		Robot bot = new Robot();
-		// Move mouse to the Point and clickOn
-		bot.mouseMove(down[0], down[1]);
-		bot.delay(80);
-		bot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-		bot.delay(400);
-		
-		// Move mouse to the Point and clickOff
-		bot.mouseMove(up[0], up[1]);
-		bot.delay(80);
-		bot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-		bot.delay(100);
-		
-		
-		
 	}
 
 	static void clickPinPoint(int[] coordinates) throws AWTException, InterruptedException {
@@ -71,7 +51,7 @@ public class Mouse {
 		player.delay(100);
 		player.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
 
-		Thread.sleep(600);
+		Thread.sleep(400);
 
 		// Move mouse to the "Yes" button and click
 		
