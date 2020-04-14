@@ -11,7 +11,7 @@ public class Index {
 	public static void main(String[] args) throws AWTException, IOException, InterruptedException {
 
 		// Amount of games to be played
-		int playGames = 5;
+		int playGames = 5000;
 		// Games played counter
 		int countGames = 0;
 
