@@ -52,41 +52,42 @@ public class Mouse {
 
 			PopUpCheck.check(coordinates);
 
-		// Shift mouse from coordinates before click
-		int shift = (int)(Math.random()*60);
-		// Shift-Xdevider
-		int deviderX = (int)(Math.random()*20+1);
-		// Shift-Ydevider
-		int deviderY = (int)(Math.random()*20+1);
+			// Shift mouse from coordinates before click
+			int shift = (int)(Math.random()*60);
+			// Shift-Xdevider
+			int deviderX = (int)(Math.random()*20+1);
+			// Shift-Ydevider
+			int deviderY = (int)(Math.random()*20+1);
+			
+	
+			// Create a robot
+			Robot player = new Robot();
+	
+			// Move mouse to the PinPoint and click
+			player.mouseMove(coordinates[0] + shift / deviderX, coordinates[1] + shift/deviderY);
+			player.delay(80);
+	
+			player.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+			player.delay(100);
+			player.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+	
+			Thread.sleep(300);
+	
+			// Check if and Move mouse to the "Yes" button and click
+			
+			// Shift from PinPoint to the "Yes" button
+			int shiftYesBottonX = 40;
+			int shiftYesBottonY = 70;
+			
+			if(player.getPixelColor(coordinates[0] + shiftYesBottonX, coordinates[1] + shiftYesBottonY).getRGB()==-16139610)	{	
+				player.mouseMove(coordinates[0] + shiftYesBottonX, coordinates[1] + shiftYesBottonY);
+				player.delay(80);
 		
-
-		// Create a robot
-		Robot player = new Robot();
-
-		// Move mouse to the PinPoint and click
-		player.mouseMove(coordinates[0] + shift / deviderX, coordinates[1] + shift/deviderY);
-		player.delay(80);
-
-		player.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-		player.delay(100);
-		player.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
-
-		Thread.sleep(600);
-
-		// Move mouse to the "Yes" button and click
-		
-		// Shift from PinPoint to the "Yes" button
-//		int shiftYesBottonX = 40;
-//		int shiftYesBottonY = 70;
-//				
-//		player.mouseMove(coordinates[0] + shiftYesBottonX, coordinates[1] + shiftYesBottonY);
-//		player.delay(80);
-//
-//		player.mousePress(InputEvent.BUTTON1_DOWN_MASK);
-//		player.delay(100);
-//		player.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				player.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+				player.delay(100);
+				player.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+				}
+			Thread.sleep(1000);
+			}
 		}
-
-	}
-
 }
