@@ -1,6 +1,7 @@
 package games;
 
 import java.awt.AWTException;
+import java.awt.Color;
 import java.awt.Robot;
 
 import main.Mouse;
@@ -38,11 +39,12 @@ public class Drag {
 		
 		
 		while(Game.getGameName(pinPoint)=="Drag") {
+			Thread.sleep(1200);
 			boolean swaped = false;
 			outerloop:
 			for (int i = 0; i<middleLane.length; i++) {
 				for (int j = 0; j<upperLane.length; j++) {
-					Thread.sleep(800);
+					
 					
 					if(compare(middleLane[i], upperLane[j])) {
 						Mouse.shift(middleLane[i], upperLane[j]);
@@ -51,6 +53,7 @@ public class Drag {
 						break outerloop;
 						}				
 				}
+			}
 				if(!swaped) {
 
 					if (bot.getPixelColor(leftLeft[0], leftLeft[1]).getRGB() == -16447481 ||
@@ -85,23 +88,49 @@ public class Drag {
 		
 		
 
-	}
+	
 	
 	
 	
 	private static boolean compare(int[]down, int[]up) throws AWTException {
-		int diff = 33;
-		boolean match = false;
 		Robot bot = new Robot();
-		if(Math.abs(bot.getPixelColor(up[0], up[1]).getRGB())/100000 - Math.abs(bot.getPixelColor(down[0], down[1]).getRGB())/100000  < diff &&
-				Math.abs(bot.getPixelColor(up[0], up[1]).getRGB())/100000 - Math.abs(bot.getPixelColor(down[0], down[1]).getRGB())/100000 > 0) 
-			return true;
+		// Color object of Up point
+		Color colup = bot.getPixelColor(up[0], up[1]);
+		// Color object of Down point
+		Color coldown = bot.getPixelColor(down[0], down[1]);
 		
-//		if(bot.getPixelColor(down[0], down[1]).getRGB() == 491521 &&
-//				bot.getPixelColor(up[0], up[1]).getRGB() == 3641186)
-//			return true;
-				
+		int threshold = 73;
+		
+		double diff = Math.sqrt((colup.getRed() - coldown.getRed()) * (colup.getRed() - coldown.getRed()) + 
+					(colup.getBlue() - coldown.getBlue()) * (colup.getBlue() - coldown.getBlue()) +
+					(colup.getGreen() - coldown.getGreen()) * (colup.getGreen() - coldown.getGreen()));
+		
+		if((int)diff==55 || (int)diff==56|| (int)diff==41 || (int)diff==70) return false;
+		
+		if (diff<threshold) return true;
+		
 		return false;
+		
+		
+//		int diffUp = 32;
+//		int  diffDown = 26;
+//		
+//		Color c = bot.getPixelColor(up[0], up[1]);
+//		c.
+//		int  colup = Math.abs(bot.getPixelColor(up[0], up[1]).getRGB())/100000;
+//		int coldown = Math.abs(bot.getPixelColor(down[0], down[1]).getRGB())/100000;
+//		
+//		if( colup - coldown  > 0 &&
+//			colup - coldown  < diffUp && 
+//			colup - coldown   > diffDown 
+//			) 
+//			return true;
+//		
+////		if(bot.getPixelColor(down[0], down[1]).getRGB() == 491521 &&
+////				bot.getPixelColor(up[0], up[1]).getRGB() == 3641186)
+////			return true;
+//				
+//		return false;
 		
 	}
 
