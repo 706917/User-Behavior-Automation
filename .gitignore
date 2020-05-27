@@ -11,3 +11,8 @@ User-Behavior-Automation-master/.classpath
 src/main.java
 wordscapes/tessdata/
 wordscapes/.classpath
+wordscapes/.settings/org.eclipse.core.resources.prefs
+wordscapes/.settings/org.eclipse.jdt.core.prefs
+wordscapes/.settings/org.eclipse.m2e.core.prefs
+wordscapes/eng.traineddata
+wordscapes/resources/001.PNG
